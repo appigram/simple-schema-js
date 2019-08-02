@@ -1,7 +1,7 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 
-import { SimpleSchema } from './SimpleSchema';
 import expect from 'expect';
+import { SimpleSchema } from './SimpleSchema';
 import testSchema from './testHelpers/testSchema';
 import expectValid from './testHelpers/expectValid';
 import expectErrorOfTypeLength from './testHelpers/expectErrorOfTypeLength';
@@ -877,7 +877,7 @@ describe('SimpleSchema', function () {
       string: String,
     });
 
-    SimpleSchema.defineValidationErrorTransform(error => {
+    SimpleSchema.defineValidationErrorTransform((error) => {
       error.message = 'validationErrorTransform';
       return error;
     });
@@ -904,7 +904,7 @@ describe('SimpleSchema', function () {
       string: 'String',
     };
 
-    SimpleSchema.addDocValidator(obj => {
+    SimpleSchema.addDocValidator((obj) => {
       expect(obj).toEqual(validatedObject);
       return errorArray;
     });
@@ -930,7 +930,7 @@ describe('SimpleSchema', function () {
       string: 'String',
     };
 
-    schema.addDocValidator(obj => {
+    schema.addDocValidator((obj) => {
       expect(obj).toEqual(validatedObject);
       return errorArray;
     });

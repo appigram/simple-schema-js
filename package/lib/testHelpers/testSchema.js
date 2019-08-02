@@ -1,6 +1,7 @@
 import { SimpleSchema } from '../SimpleSchema';
 import Address from './Address';
-import '@babel/polyfill';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 const testSchema = new SimpleSchema({
   string: {
@@ -88,10 +89,10 @@ const testSchema = new SimpleSchema({
   minMaxNumberCalculated: {
     type: SimpleSchema.Integer,
     optional: true,
-    min() {
+    min () {
       return 10;
     },
-    max() {
+    max () {
       return 20;
     },
   },
@@ -156,10 +157,10 @@ const testSchema = new SimpleSchema({
   minMaxDateCalculated: {
     type: Date,
     optional: true,
-    min() {
+    min () {
       return (new Date(Date.UTC(2013, 0, 1)));
     },
-    max() {
+    max () {
       return (new Date(Date.UTC(2013, 11, 31)));
     },
   },

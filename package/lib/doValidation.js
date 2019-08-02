@@ -4,7 +4,9 @@ import isObject from 'lodash.isobject';
 import union from 'lodash.union';
 import includes from 'lodash.includes';
 import { SimpleSchema } from './SimpleSchema';
-import { appendAffectedKey, getParentOfKey, looksLikeModifier, isObjectWeShouldTraverse } from './utility';
+import {
+  appendAffectedKey, getParentOfKey, looksLikeModifier, isObjectWeShouldTraverse,
+} from './utility';
 import typeValidator from './validation/typeValidator';
 import requiredValidator from './validation/requiredValidator';
 import allowedValuesValidator from './validation/allowedValuesValidator';
@@ -105,8 +107,8 @@ function doValidation({
       // Value checks are not necessary for null or undefined values,
       // except for null array items, or for $unset or $rename values
       valueShouldBeChecked: (
-        op !== '$unset' && op !== '$rename' &&
-        ((val !== undefined && val !== null) || (affectedKeyGeneric.slice(-2) === '.$' && val === null))
+        op !== '$unset' && op !== '$rename'
+        && ((val !== undefined && val !== null) || (affectedKeyGeneric.slice(-2) === '.$' && val === null))
       ),
       ...(extendedCustomContext || {}),
     };
@@ -122,7 +124,7 @@ function doValidation({
 
     // Loop through each of the definitions in the SimpleSchemaGroup.
     // If any return true, we're valid.
-    const fieldIsValid = def.type.some(typeDef => {
+    const fieldIsValid = def.type.some((typeDef) => {
       const finalValidatorContext = {
         ...validatorContext,
 
@@ -143,7 +145,7 @@ function doValidation({
 
       // We use _.every just so that we don't continue running more validator
       // functions after the first one returns false or an error string.
-      return fieldValidators.every(validator => {
+      return fieldValidators.every((validator) => {
         const result = validator.call(finalValidatorContext);
 
         // If the validator returns a string, assume it is the
@@ -202,10 +204,10 @@ function doValidation({
       affectedKeyGeneric = MongoObject.makeKeyGeneric(affectedKey);
 
       const shouldValidateKey = !keysToValidate || keysToValidate.some(keyToValidate => (
-        keyToValidate === affectedKey ||
-        keyToValidate === affectedKeyGeneric ||
-        affectedKey.startsWith(`${keyToValidate}.`) ||
-        affectedKeyGeneric.startsWith(`${keyToValidate}.`)
+        keyToValidate === affectedKey
+        || keyToValidate === affectedKeyGeneric
+        || affectedKey.startsWith(`${keyToValidate}.`)
+        || affectedKeyGeneric.startsWith(`${keyToValidate}.`)
       ));
 
       // Perform validation for this key
@@ -251,7 +253,7 @@ function doValidation({
       isInArrayItemObject = (affectedKeyGeneric && affectedKeyGeneric.slice(-2) === '.$');
 
       // Check all keys in the merged list
-      keysToCheck.forEach(key => {
+      keysToCheck.forEach((key) => {
         checkObj({
           val: val[key],
           affectedKey: appendAffectedKey(affectedKey, key),
@@ -276,7 +278,7 @@ function doValidation({
         // so we check them all with undefined value to force any 'required' checks to fail
         if (isUpsert && (op === '$set' || op === '$setOnInsert')) {
           const presentKeys = Object.keys(opObj);
-          schema.objectKeys().forEach(schemaKey => {
+          schema.objectKeys().forEach((schemaKey) => {
             if (!includes(presentKeys, schemaKey)) {
               checkObj({
                 val: undefined,
@@ -316,14 +318,14 @@ function doValidation({
 
   // Custom whole-doc validators
   const docValidators = schema._docValidators.concat(SimpleSchema._docValidators);
-  docValidators.forEach(func => {
+  docValidators.forEach((func) => {
     const errors = func(obj);
     if (!Array.isArray(errors)) throw new Error('Custom doc validator must return an array of error objects');
     if (errors.length) validationErrors = validationErrors.concat(errors);
   });
 
   const addedFieldNames = [];
-  validationErrors = validationErrors.filter(errObj => {
+  validationErrors = validationErrors.filter((errObj) => {
     // Remove error types the user doesn't care about
     if (includes(ignoreTypes, errObj.type)) return false;
     // Make sure there is only one error per fieldName

@@ -54,7 +54,7 @@ export default function getPositionsForAutoValue({ fieldName, isModifier, mongoO
   const parentPositions = mongoObject.getPositionsInfoForGenericKey(parentPath);
 
   if (parentPositions.length) {
-    parentPositions.forEach(info => {
+    parentPositions.forEach((info) => {
       const childPosition = `${info.position}[${lastPartWithBraces}]`;
       if (!positions.find(i => i.position === childPosition)) {
         positions.push({
@@ -67,7 +67,7 @@ export default function getPositionsForAutoValue({ fieldName, isModifier, mongoO
     });
   } else if (parentPath.slice(-2) !== '.$') {
     // positions that will create parentPath
-    mongoObject.getPositionsThatCreateGenericKey(parentPath).forEach(info => {
+    mongoObject.getPositionsThatCreateGenericKey(parentPath).forEach((info) => {
       const { operator, position } = info;
       let wouldBePosition;
       if (operator) {

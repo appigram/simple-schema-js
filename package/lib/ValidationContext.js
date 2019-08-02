@@ -1,6 +1,6 @@
 import MongoObject from 'mongo-object';
-import doValidation from './doValidation.js';
 import findWhere from 'lodash.findwhere';
+import doValidation from './doValidation.js';
 
 export default class ValidationContext {
   constructor(ss) {

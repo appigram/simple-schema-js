@@ -3,7 +3,7 @@ import extend from 'extend';
 
 class SimpleSchemaGroup {
   constructor(...definitions) {
-    this.definitions = definitions.map(definition => {
+    this.definitions = definitions.map((definition) => {
       if (MongoObject.isBasicObject(definition)) return extend(true, {}, definition);
 
       if (definition instanceof RegExp) {

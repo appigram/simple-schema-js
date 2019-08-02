@@ -1,11 +1,12 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 
-import { SimpleSchema } from './SimpleSchema';
 import expect from 'expect';
+import { SimpleSchema } from './SimpleSchema';
 import friendsSchema from './testHelpers/friendsSchema';
 import testSchema from './testHelpers/testSchema';
 import expectErrorLength from './testHelpers/expectErrorLength';
-import '@babel/polyfill';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 describe('SimpleSchema - allowedValues', function () {
   describe('normal', function () {
